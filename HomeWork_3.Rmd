@@ -1,0 +1,95 @@
+---
+title: "Homework_3"
+author: "Sijay Matsinye"
+date: "2/16/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##1) Enter and run USArrests. What type of information is shown in the data table USArrests? (Three or four sentences)
+
+    ** This data table shows the rates of arrests for three different types of violent crimes broken down by state. THe table includes four variable that are the three crimes: murder,assault, rape along with the percent of the population living in urban areas. Lastly the rate represented for each crime is calculated per every 100,000 residents.
+```{r}
+library(tidyverse)
+USArrests
+```
+
+##2) Use and show R coding that features a map function to show maximum values for all variables of the USArerests data frame. Which State has the largest number of Assaults according to the USAressts data frame ?
+
+    **North Carolina has the largest number of Assaults according to the USArrests data frame.
+```{r}
+map_dbl(USArrests, max)
+USArrests %>% 
+  arrange(desc(Assault))
+```
+
+##3) Install the nycflights13 package: install.packages("nycflights13"), call the following library:library(nycflights13), and then enter (this will produce the flights data table)
+```{r}
+#install.packages("nycflights13")
+library(nycflights13)
+flights
+``` 
+
+##4) Use and show R code that will indicate how many rows and how many columns the flights data has. Review and revisit your notes from STAT 412/612. Describe a tibble (two or three sentences).Now use and show R code that verifies that flights is a tibble
+
+    **A tibble is a data frame that doesn't perform al of the actions of a data frame. When printed it only shows a preview of all the values and objects in the data frame and it can't change the object types. Overall it performs modified actions of that which a data frame does. 
+```{r}
+flights %>% 
+  nrow()
+flights %>% 
+  ncol()
+flights %>% 
+  is_tibble()
+```
+
+##5)Now Use and show R code (featuring a map function) that will output the type of each column of the flights tibble.
+```{r}
+flights
+map(flights,typeof)
+```
+
+##6)Use and show R coding that features usage of a map function to find the slope and the intercept of models for the different levels of the Species variable of the iris data frame. For each model, Sepal.Width predicts Sepal.Length.
+
+```{r}
+models <- iris %>%
+  split(.$Species) %>%
+  map(~lm(Sepal.Length ~ Sepal.Width, data = .))
+models
+```
+
+7)
+```{r}
+V <- list(12, 22, 27, 31.5, NA, 39, "east")
+V
+```
+
+7a) Use and show R code to find the length of the list
+```{r}
+length(V)
+```
+
+
+
+7b) Use and show R code that will extract the missing value
+```{r}
+V[is.na(V)]
+```
+
+7c) Use and show R code that will extract the third object
+```{r}
+V[3]
+```
+
+7d) Use and show R code that will extract the character string and the minimum number.
+```{r}
+str(V[1])
+str(V[7])
+```
+
+7e) Use one line of code to show that the seventh object is a character object.
+```{r}
+str(V[[7]])
+```
