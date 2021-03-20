@@ -1,0 +1,93 @@
+---
+title: "Homework_6"
+author: "Sijay Matsinye"
+date: "3/20/2021"
+output:
+  word_document: default
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+#install.packages("rvest")
+library(rvest)
+#install.packages("listviewer")
+library(dplyr)
+library(repurrrsive)
+#listviewer::jsonedit(gh_users)
+library(readr)
+```
+
+```{r}
+Link <- "https://www.imdb.com/list/ls091520106/"
+page = read_html(Link)
+Title = page%>% html_nodes(".lister-item-header a")%>%
+  html_text()
+Title
+
+Link <- "https://www.imdb.com/list/ls091520106/"
+page = read_html(Link)
+Ratings = page%>% html_nodes(".ipl-rating-star.small .ipl-rating-star__rating")%>%
+  html_text()
+Ratings
+
+
+Link <- "https://www.imdb.com/list/ls091520106/"
+page = read_html(Link)
+Runtime = page%>% html_nodes(".runtime")%>%
+  html_text()
+Runtime
+```
+
+```{r}
+top100dataframe = data.frame(Title,Ratings,Runtime)
+top100dataframe
+
+
+is_tibble(top100dataframe)
+as_tibble(top100dataframe)
+
+```
+
+**2)
+a) Explain or describe nested Lists.  
+    A nested list is a list contained within a list. This can be observed in a variable typle list that contains multiple elements of different types like a list along with a double, a char etc. Additionally a nested list can be a data frame of lists.
+    
+b) Open and explore data for Git Hub repos by running the following code gh_repo.  Comment on the structure and arrangement of the data 
+    *The structure is not very efficient because it is printing every single element in the nested list one by one. The elements and their location in the nested list is indicted line by line leading to hunders of lines of code.
+```{r}
+gh_repos
+
+```
+
+c)In two or three sentences, explain what happens to the data when you run the code.
+    * When you run this code it creates another list/tibble of the data desribed above. In otherwords, it makes another nested list that contains the nested list "gh_repos" with all of its subsequent elements.
+```{r}
+ repos <- tibble(repo = gh_repos)
+repos
+
+```
+
+d)  Describe the data representation when the listserver tool is applied. And go into detail explaining why we have a nested List configuration. What do the numbers 30 and 68 represent ? (6 or 7 sentences)
+    The data is representing the nested list of the git repositories. Also it is representing the unique identifying attributes of each repository. We have a nested list because this a complicated complex list with numerous elements that possess unique values for each repo. Therefore, this complexity must me represented in this way. The number 30 represents the number of different repositories. The number 68 represents the number of different attributes each repository has with unique descriptive elements like id number, name etc.
+```{r}
+#listviewer::jsonedit(gh_repos)
+```
+
+e)  Use and show R unesting code to produce the tibble below.
+
+```{r}
+
+#listviewer::jsonedit(repos)
+repos %>% 
+  unnest_wider(repo) 
+  
+```
+
+    
