@@ -1,0 +1,17 @@
+---
+title: "Diamondsfile2"
+author: "Sijay Matsinye"
+date: "3/28/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(dplyr)
+diamonds%>%
+ select(price, color, x)
+```
